@@ -1,0 +1,467 @@
+/* Divi Auto Load Admin Styles */
+
+.divi-autoload-settings-wrap {
+    max-width: 100%;
+    margin: 20px 20px 20px 0;
+    padding: 0;
+}
+
+.divi-autoload-settings-wrap h1 {
+    color: #1d2327;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+/* Tabs Navigation */
+.divi-autoload-tabs {
+    display: flex;
+    gap: 4px;
+    background: #fff;
+    border-radius: 12px 12px 0 0;
+    padding: 6px 6px 0 6px;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+    border-bottom: none;
+}
+
+.divi-autoload-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    background: transparent;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+    transition: all 0.2s ease;
+    position: relative;
+    bottom: -1px;
+    text-decoration: none;
+}
+
+.divi-autoload-tab:hover {
+    color: #667eea;
+    background: #f3f4f6;
+}
+
+.divi-autoload-tab.active {
+    background: #fff;
+    color: #667eea;
+    font-weight: 600;
+    border: 1px solid #e5e7eb;
+    border-bottom: 1px solid #fff;
+    bottom: -1px;
+}
+
+/* Tab Content */
+.divi-autoload-tab-content {
+    display: none;
+}
+
+.divi-autoload-tab-content.active {
+    display: block;
+}
+
+/* Card */
+.divi-autoload-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0 12px 12px 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.divi-autoload-card:first-child {
+    border-radius: 0 12px 12px 12px;
+}
+
+.divi-autoload-card-header {
+    padding: 20px 24px 0 24px;
+}
+
+.divi-autoload-card-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1d2327;
+    margin: 0 0 6px 0;
+}
+
+.divi-autoload-card-header p {
+    color: #6b7280;
+    font-size: 13px;
+    margin: 0;
+}
+
+.divi-autoload-card-body {
+    padding: 10px 24px 24px 24px;
+}
+
+/* Form Table */
+.divi-autoload-form-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.divi-autoload-form-table th,
+.divi-autoload-form-table td {
+    padding: 16px 0;
+    border-bottom: 1px solid #f3f4f6;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.divi-autoload-form-table tr:last-child th,
+.divi-autoload-form-table tr:last-child td {
+    border-bottom: none;
+}
+
+.divi-autoload-form-table th {
+    width: 220px;
+    font-weight: 600;
+    color: #374151;
+    font-size: 14px;
+}
+
+.divi-autoload-form-table td {
+    color: #4b5563;
+}
+
+p.description {
+    color: #9ca3af;
+    font-size: 12px;
+    margin: 6px 0 0 0 !important;
+}
+
+/* Toggle Switch */
+.divi-autoload-switch {
+    position: relative;
+    display: inline-block;
+    width: 46px;
+    height: 24px;
+}
+
+.divi-autoload-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.divi-autoload-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #d1d5db;
+    transition: 0.3s;
+    border-radius: 24px;
+}
+
+.divi-autoload-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+input:checked + .divi-autoload-slider {
+    background-color: #667eea;
+}
+
+input:checked + .divi-autoload-slider:before {
+    transform: translateX(22px);
+}
+
+/* Range Slider */
+.divi-autoload-range-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.divi-autoload-range {
+    width: 200px;
+    height: 6px;
+    border-radius: 3px;
+    background: #e5e7eb;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.divi-autoload-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #667eea;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(102, 126, 234, 0.4);
+}
+
+.divi-autoload-range::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #667eea;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 1px 3px rgba(102, 126, 234, 0.4);
+}
+
+.divi-autoload-range-value {
+    font-weight: 600;
+    color: #667eea;
+    font-size: 14px;
+    min-width: 30px;
+    text-align: center;
+    background: #eef2ff;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.divi-autoload-range-unit {
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+/* Position Options */
+.divi-autoload-position-options {
+    display: flex;
+    gap: 12px;
+}
+
+.divi-autoload-position-option {
+    flex: 1;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #fafafa;
+}
+
+.divi-autoload-position-option input {
+    display: none;
+}
+
+.divi-autoload-position-option:hover {
+    border-color: #c7d2fe;
+    background: #f5f3ff;
+}
+
+.divi-autoload-position-option.active {
+    border-color: #667eea;
+    background: #eef2ff;
+}
+
+.divi-autoload-position-option span {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    margin-top: 8px;
+}
+
+.divi-autoload-position-option.active span {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.position-preview {
+    width: 100%;
+    height: 60px;
+    background: #e5e7eb;
+    border-radius: 6px;
+    position: relative;
+}
+
+.position-dot {
+    width: 16px;
+    height: 16px;
+    background: #667eea;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.position-dot.bottom-left {
+    bottom: 6px;
+    left: 6px;
+}
+
+.position-dot.bottom-center {
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.position-dot.bottom-right {
+    bottom: 6px;
+    right: 6px;
+}
+
+/* Color Row */
+.divi-autoload-color-row {
+    display: flex;
+    gap: 24px;
+}
+
+.divi-autoload-color-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.divi-autoload-color-item input[type="color"] {
+    width: 48px;
+    height: 42px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 2px;
+    background: #fff;
+}
+
+.divi-autoload-color-item span {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+/* Preview */
+.divi-autoload-appearance-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 30px;
+}
+
+.divi-autoload-appearance-settings {
+    min-width: 0;
+}
+
+.divi-autoload-appearance-preview {
+    display: flex;
+    align-items: flex-start;
+}
+
+.divi-autoload-preview-box {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 24px;
+    width: 100%;
+    border: 1px solid #e5e7eb;
+}
+
+.divi-autoload-preview-box h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+.divi-autoload-preview-box .preview-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.preview-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.preview-main-button {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.preview-nav-button {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Save Button */
+.divi-autoload-save-button {
+    background: #667eea !important;
+    border-color: #667eea !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    padding: 10px 32px !important;
+    height: auto !important;
+    border-radius: 6px !important;
+    margin-top: 10px !important;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.divi-autoload-save-button:hover {
+    background: #5568d3 !important;
+    border-color: #5568d3 !important;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .divi-autoload-appearance-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .divi-autoload-preview-box {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .divi-autoload-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .divi-autoload-tab {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+    
+    .divi-autoload-form-table th {
+        width: auto;
+        display: block;
+        padding-bottom: 4px;
+    }
+    
+    .divi-autoload-position-options {
+        flex-direction: column;
+    }
+    
+    .divi-autoload-card {
+        border-radius: 8px;
+    }
+}

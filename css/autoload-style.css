@@ -1,0 +1,467 @@
+/* Divi Auto Load Next Post Styles */
+
+.autoload-loader {
+    text-align: center;
+    padding: 40px 20px;
+    margin: 40px 0;
+}
+
+.autoload-loader .spinner {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 20px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #2ea3f2;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.autoload-loader p {
+    color: #666;
+    font-size: 16px;
+    margin: 0;
+}
+
+.autoload-separator {
+    margin: 60px 0;
+}
+
+.autoload-separator hr {
+    border: 0;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 0;
+}
+
+/* Hide the "Next:" text */
+.autoload-separator .next-post-title {
+    display: none;
+}
+
+/* Fade in animation for newly loaded posts */
+.autoload-post-fadein {
+    opacity: 0;
+    animation: fadeInPost 0.6s ease-in forwards;
+}
+
+@keyframes fadeInPost {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Floating Button - Bottom Right */
+.autoload-floating-button {
+    position: fixed;
+    bottom: 40px;
+    right: 50px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+    cursor: pointer;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+.autoload-floating-button.visible {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+
+.autoload-floating-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(102, 126, 234, 0.5);
+}
+
+.autoload-floating-button:active {
+    transform: scale(0.95);
+}
+
+.autoload-floating-button .button-progress-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.autoload-floating-button .progress-ring-circle {
+    transition: stroke-dashoffset 0.3s ease;
+    stroke: rgba(255, 255, 255, 0.8);
+    stroke-linecap: round;
+}
+
+.autoload-floating-button .button-percentage {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    position: relative;
+    z-index: 2;
+}
+
+/* Go to Top Button - Dot style, above main button */
+.autoload-goto-top-button {
+    position: fixed;
+    bottom: 112px;
+    right: 71px;
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(135deg, #48c6ef 0%, #6f86d6 100%);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(72, 198, 239, 0.4);
+    cursor: pointer;
+    z-index: 99998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    padding: 0;
+}
+
+.autoload-goto-top-button.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+
+.autoload-goto-top-button:hover {
+    transform: scale(1.5) translateY(0);
+    box-shadow: 0 3px 12px rgba(72, 198, 239, 0.6);
+}
+
+.autoload-goto-top-button:active {
+    transform: scale(1.2) translateY(0);
+}
+
+.autoload-goto-top-button svg {
+    width: 11px;
+    height: 11px;
+    color: #ffffff;
+}
+
+/* Go to Bottom Button - Dot style, below main button */
+.autoload-goto-bottom-button {
+    position: fixed;
+    bottom: 10px;
+    right: 71px;
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(240, 147, 251, 0.4);
+    cursor: pointer;
+    z-index: 99998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.8) translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    padding: 0;
+}
+
+.autoload-goto-bottom-button.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+
+.autoload-goto-bottom-button:hover {
+    transform: scale(1.5) translateY(0);
+    box-shadow: 0 3px 12px rgba(240, 147, 251, 0.6);
+}
+
+.autoload-goto-bottom-button:active {
+    transform: scale(1.2) translateY(0);
+}
+
+.autoload-goto-bottom-button svg {
+    width: 11px;
+    height: 11px;
+    color: #ffffff;
+}
+
+/* Floating Reading Widget - Drawer Style */
+.autoload-reading-widget {
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 -4px 30px rgba(102, 126, 234, 0.3);
+    border-radius: 20px;
+    padding: 24px;
+    z-index: 99998;
+    width: 400px;
+    max-width: calc(100vw - 80px);
+    transform: translateY(calc(100% + 40px));
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.autoload-reading-widget.open {
+    transform: translateY(0);
+}
+
+.autoload-reading-widget .widget-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #ffffff;
+}
+
+.autoload-reading-widget .widget-close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.autoload-reading-widget .widget-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding-right: 30px;
+}
+
+.autoload-reading-widget .widget-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.autoload-reading-widget .widget-icon {
+    width: 24px;
+    height: 24px;
+    color: #ffffff;
+}
+
+.autoload-reading-widget .reading-post-title {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.3;
+    flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.autoload-reading-widget .reading-post-excerpt {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0 0 24px 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.autoload-reading-widget .widget-progress-section {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 16px;
+    backdrop-filter: blur(10px);
+    margin-top: 8px;
+}
+
+.autoload-reading-widget .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.autoload-reading-widget .progress-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.autoload-reading-widget .progress-percentage {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.autoload-reading-widget .progress-bar-mini {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.autoload-reading-widget .progress-fill-mini {
+    height: 100%;
+    background: linear-gradient(90deg, #ffffff, #f0f0f0);
+    width: 0%;
+    transition: width 0.3s ease-out;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .autoload-floating-button {
+        bottom: 30px;
+        right: 40px;
+        width: 56px;
+        height: 56px;
+    }
+    
+    .autoload-floating-button .button-percentage {
+        font-size: 13px;
+    }
+    
+    .autoload-goto-top-button {
+        bottom: 98px;
+        right: 59px;
+        width: 15px;
+        height: 15px;
+    }
+    
+    .autoload-goto-top-button svg {
+        width: 9px;
+        height: 9px;
+    }
+    
+    .autoload-goto-bottom-button {
+        bottom: 10px;
+        right: 59px;
+        width: 15px;
+        height: 15px;
+    }
+    
+    .autoload-goto-bottom-button svg {
+        width: 9px;
+        height: 9px;
+    }
+    
+    .autoload-reading-widget {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px;
+        border-radius: 16px 16px 0 0;
+    }
+    
+    .autoload-reading-widget .widget-icon-wrapper {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .autoload-reading-widget .widget-icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .autoload-reading-widget .reading-post-title {
+        font-size: 15px;
+    }
+    
+    .autoload-reading-widget .reading-post-excerpt {
+        font-size: 13px;
+    }
+    
+    .autoload-reading-widget .progress-percentage {
+        font-size: 14px;
+    }
+}
+
+/* Button positioning options - can be changed via class */
+.autoload-floating-button.position-left {
+    left: 30px;
+    right: auto;
+}
+
+.autoload-floating-button.position-bottom-left {
+    left: 30px;
+    right: auto;
+    bottom: 30px;
+}
+
+.autoload-floating-button.position-bottom-center {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) scale(0.8);
+}
+
+.autoload-floating-button.position-bottom-center.visible {
+    transform: translateX(-50%) scale(1);
+}
+
+.autoload-floating-button.position-bottom-center:hover {
+    transform: translateX(-50%) scale(1.1);
+}
+
+/* Widget positioning options - can be changed via class */
+.autoload-reading-widget.position-left {
+    left: 0;
+    right: auto;
+    border-radius: 20px 20px 0 0;
+}
+
+.autoload-reading-widget.position-center {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) translateY(100%);
+}
+
+.autoload-reading-widget.position-center.open {
+    transform: translateX(-50%) translateY(0);
+}
+
+a.comment-section-toggle-button {
+    display: inline-block;
+    cursor: pointer;
+    color: #2ea3f2;
+    margin-top: 20px;
+}
+
+section#comment-wrap {
+    display: none;
+}
