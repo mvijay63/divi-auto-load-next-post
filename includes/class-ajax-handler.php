@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 class Divi_Auto_Load_Ajax_Handler {
 
     /**
-     * Get next post ID
+     * Get next post ID (cyclic — wraps around to the newest post after the last one)
      */
     public function get_next_post_id() {
         check_ajax_referer('divi_autoload_nonce', 'nonce');
@@ -31,52 +31,82 @@ class Divi_Auto_Load_Ajax_Handler {
         }
 
         $options = get_option('divi_autoload_settings');
-        
-        // Query for the next post by date
-        $args = array(
-            'post_type' => $current_post->post_type,
+
+        // Build shared base args
+        $base_args = array(
+            'post_type'      => $current_post->post_type,
             'posts_per_page' => 1,
-            'post_status' => 'publish',
-            'date_query' => array(
-                array(
-                    'before' => $current_post->post_date,
-                    'inclusive' => false,
-                ),
-            ),
-            'orderby' => 'date',
-            'order' => 'DESC',
-            'post__not_in' => array($current_post_id)
+            'post_status'    => 'publish',
+            'post__not_in'   => array($current_post_id),
+            'orderby'        => 'date',
+            'order'          => 'DESC',
         );
 
-        // If fetch posts only same category is turned on
-
+        // Restrict to same category if enabled
         if (isset($options['enable_same_category']) && $options['enable_same_category'] == '1') {
-
             $categories = wp_get_post_categories($current_post_id);
-
-            if( !empty($categories) ){
-                $args['category__in'] = $categories;
+            if (!empty($categories)) {
+                $base_args['category__in'] = $categories;
             }
         }
 
-        $next_posts = new WP_Query($args);
-        
+        // --- Step 1: Try to find the chronologically previous post (older than current) ---
+        $next_args = array_merge($base_args, array(
+            'date_query' => array(
+                array(
+                    'before'    => $current_post->post_date,
+                    'inclusive' => false,
+                ),
+            ),
+        ));
+
+        $next_posts = new WP_Query($next_args);
+
         if ($next_posts->have_posts()) {
+            // Normal case — a older post exists
             $next_post = $next_posts->posts[0];
             wp_reset_postdata();
-            
-            // Fetch and scope external CSS files
+
             $scoped_css = $this->fetch_and_scope_external_css($next_post->ID);
-            
+
             wp_send_json_success(array(
-                'post_id' => $next_post->ID,
-                'post_url' => get_permalink($next_post->ID),
+                'post_id'    => $next_post->ID,
+                'post_url'   => get_permalink($next_post->ID),
                 'post_title' => get_the_title($next_post->ID),
-                'scoped_css' => $scoped_css
+                'scoped_css' => $scoped_css,
+                'cyclic'     => false,
             ));
+
         } else {
+            // --- Step 2: No older post found — wrap around to the newest post (cyclic) ---
             wp_reset_postdata();
-            wp_send_json_error('No next post found');
+
+            $wrap_args = array_merge($base_args, array(
+                // No date_query — fetch the newest published post excluding current
+                'order' => 'DESC',
+            ));
+
+            $wrap_posts = new WP_Query($wrap_args);
+
+            if ($wrap_posts->have_posts()) {
+                $next_post = $wrap_posts->posts[0];
+                wp_reset_postdata();
+
+                $scoped_css = $this->fetch_and_scope_external_css($next_post->ID);
+
+                wp_send_json_success(array(
+                    'post_id'    => $next_post->ID,
+                    'post_url'   => get_permalink($next_post->ID),
+                    'post_title' => get_the_title($next_post->ID),
+                    'scoped_css' => $scoped_css,
+                    'cyclic'     => true, // flag so JS knows we wrapped around
+                ));
+
+            } else {
+                // Only one post exists in the system — nothing to cycle to
+                wp_reset_postdata();
+                wp_send_json_error('Only one post exists');
+            }
         }
     }
     
