@@ -115,7 +115,7 @@
 /* Go to Top Button */
 .autoload-goto-top-button {
     position: fixed;
-    bottom: 112px;
+    bottom: 95px;
     right: 71px;
     width: 18px;
     height: 18px;
@@ -148,7 +148,7 @@
 /* Go to Bottom Button */
 .autoload-goto-bottom-button {
     position: fixed;
-    bottom: 10px;
+    bottom: 28px;
     right: 71px;
     width: 18px;
     height: 18px;
@@ -248,10 +248,10 @@
     margin: 0;
     line-height: 1.3;
     flex: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    min-width: 0;           /* allows flex child to shrink below content size */
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Progress section */

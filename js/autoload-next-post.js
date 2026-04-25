@@ -466,7 +466,7 @@
         const WP_KEEP_IDS = [
             'commentform', 'comment', 'author', 'email', 'url',
             'comment-wrap', 'comments', 'respond', 'reply-title',
-            'cancel-comment-reply-link', 'comment-form'
+            'cancel-comment-reply-link', 'comment-form', "ez-toc-container"
         ];
         $html.find('[id]').each(function() {
             const $el = $(this);
