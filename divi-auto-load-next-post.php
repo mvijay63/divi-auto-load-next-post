@@ -35,12 +35,32 @@ class Divi_Auto_Load_Next_Post {
         // Frontend hooks
         if (!is_admin() && empty($_GET['et_fb'])) {
             add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
+            add_action('wp_enqueue_scripts', array($this, 'replace_eztoc_script_with_custom'), 20);
             add_action('et_after_post', array($this, 'comments_toggle_button'));
         }
         
         // AJAX hooks
         add_action('wp_ajax_get_next_post_id', array($this, 'ajax_get_next_post_id'));
         add_action('wp_ajax_nopriv_get_next_post_id', array($this, 'ajax_get_next_post_id'));
+
+        // Easy Table of Contents: wrap auto-inserted TOC markup for styling/targeting (after eztoc_shortcode_html_no_heading_text at priority 10).
+        add_filter('eztoc_autoinsert_final_toc_html', array($this, 'wrap_eztoc_autoinsert_html'), 20);
+    }
+
+    /**
+     * Wrap EZ TOC auto-insert HTML in a container for Divi autoload integration.
+     *
+     * @param string $html Final TOC HTML from Easy Table of Contents.
+     * @return string
+     */
+    public function wrap_eztoc_autoinsert_html($html) {
+        if (!isset($this->options['enable_plugin']) || $this->options['enable_plugin'] != '1') {
+            return $html;
+        }
+        if ('' === trim((string) $html)) {
+            return $html;
+        }
+        return '<div class="ez-toc-instance-root">' . $html . '</div>';
     }
     
     /**
@@ -104,12 +124,59 @@ class Divi_Auto_Load_Next_Post {
             'divi-autoload-next-post-style',
             DIVI_AUTOLOAD_PLUGIN_URL . 'css/autoload-style.css',
             array(),
-            DIVI_AUTOLOAD_VERSION
+            DIVI_AUTOLOAD_VERSION.time(),
         );
         
         // Add inline CSS for customization
         $custom_css = $this->get_custom_css();
         wp_add_inline_style('divi-autoload-next-post-style', $custom_css);
+    }
+
+    /**
+     * Dequeue Easy Table of Contents front.js and load bundled toc-custom.js instead.
+     * Re-registers the eztoc-js handle so wp_localize_script output (ezTOC) is preserved.
+     */
+    public function replace_eztoc_script_with_custom() {
+        if (!isset($this->options['enable_plugin']) || $this->options['enable_plugin'] != '1') {
+            return;
+        }
+        if (!is_single() || !is_singular('post')) {
+            return;
+        }
+        if (!wp_script_is('eztoc-js', 'enqueued')) {
+            return;
+        }
+
+        global $wp_scripts;
+        if (!($wp_scripts instanceof WP_Scripts) || !isset($wp_scripts->registered['eztoc-js'])) {
+            return;
+        }
+
+        $l10n = $wp_scripts->get_data('eztoc-js', 'data');
+        $deps = array('jquery', 'eztoc-js-cookie', 'eztoc-jquery-sticky-kit');
+        if (wp_script_is('eztoc-scroll-scriptjs', 'enqueued')) {
+            $deps[] = 'eztoc-scroll-scriptjs';
+        }
+
+        $toc_custom_path = DIVI_AUTOLOAD_PLUGIN_DIR . 'js/toc-custom.js';
+        $toc_custom_ver  = DIVI_AUTOLOAD_VERSION;
+        if (file_exists($toc_custom_path)) {
+            $toc_custom_ver .= '.' . filemtime($toc_custom_path);
+        }
+
+        wp_dequeue_script('eztoc-js');
+        wp_deregister_script('eztoc-js');
+        wp_register_script(
+            'eztoc-js',
+            DIVI_AUTOLOAD_PLUGIN_URL . 'js/toc-custom.js',
+            $deps,
+            $toc_custom_ver,
+            true
+        );
+        wp_enqueue_script('eztoc-js');
+        if ($l10n) {
+            $wp_scripts->add_data('eztoc-js', 'data', $l10n);
+        }
     }
     
     /**
